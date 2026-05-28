@@ -242,39 +242,4 @@ These challenges were resolved through debugging, proper project structuring, an
 
 ---
 
-# Demo Video
 
-The demo video demonstrates:
-
-* CRUD operations
-* Machine Learning prediction
-* Frontend and backend functionality
-* Database integration
-* Project workflow explanation
-
----
-
-# GitHub Repository
-
-Upload project to GitHub using:
-
-```bash
-git init
-git add .
-git commit -m "Health Prediction Application"
-git branch -M main
-git remote add origin YOUR_REPOSITORY_LINK
-git push -u origin main
-```
-
----
-
-# Author
-
-Piyusha Kapare
-
----
-
-# License
-
-This project is developed for educational and evaluation purposes.
