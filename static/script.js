@@ -1,0 +1,1 @@
+console.log("Health Prediction App Loaded");
