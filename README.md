@@ -129,7 +129,6 @@ Health_Prediction/
 
 ### Step 1: Clone Repository
 
-git clone https://github.com/your-github-username/health-prediction-app.git
 
 cd health-prediction-app
 
