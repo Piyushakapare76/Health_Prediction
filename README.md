@@ -1,196 +1,281 @@
-# Health_Prediction
 # Health Prediction Application
 
-## Project Overview
+## Overview
 
-The Health Prediction Application is a web-based AI/ML healthcare system developed using Python Flask, MySQL, HTML, CSS, JavaScript, and Machine Learning algorithms. The application allows users to manage patient health records and predict possible health conditions based on blood test results.
+The Health Prediction Application is a Flask-based web application that manages patient health records and predicts health conditions using Machine Learning. The application provides complete CRUD (Create, Read, Update, Delete) operations, data validation, MySQL database integration, and AI/ML-based prediction functionality.
 
-The system performs CRUD (Create, Read, Update, Delete) operations and uses a trained Machine Learning model to generate health-related remarks automatically from patient blood test values.
+This project was developed as part of a technical assessment to demonstrate web development, database management, API development, validation handling, and machine learning integration.
 
 ---
 
-# Features
+## Features
 
-## CRUD Operations
+### Patient Record Management
 
-* Add new patient records
+* Create new patient records
 * View all patient records
-* Update patient information
+* Update existing patient records
 * Delete patient records
 
-## AI/ML Prediction
+### Data Validation
 
-The application predicts possible health conditions using:
+* Email format validation
+* Duplicate record detection
+* Invalid date validation
+* Future date validation
+* Required field validation
 
-* Glucose
-* Haemoglobin
-* Cholesterol
+### Machine Learning Integration
 
-The prediction result is automatically displayed in the Remarks section.
+* Health prediction using patient parameters
+* Real-time prediction generation
+* Trained ML model integration using Joblib
 
-## Input Validation
+### Database Management
 
-* Email validation
-* Future date restriction for DOB
-* Numeric validation for blood values
-
-## Responsive User Interface
-
-* User-friendly interface
-* Bootstrap-based responsive design
-* Simple navigation and data management
+* MySQL database connectivity
+* Secure record storage
+* CRUD functionality support
 
 ---
 
-# Technology Stack
+## Technology Stack
 
-## Frontend
+### Frontend
 
 * HTML5
 * CSS3
-* JavaScript
-* Bootstrap 5
+* Bootstrap
 
-## Backend
+### Backend
 
 * Python
-* Flask Framework
+* Flask
 
-## Database
+### Database
 
 * MySQL
 
-## Machine Learning
+### Machine Learning
 
-* Scikit-learn
-* Decision Tree Classifier
+* Scikit-Learn
+* Pandas
+* NumPy
+* Joblib
 
 ---
 
-# Project Structure
+## Project Architecture
 
-```bash
-Health_prediction/
+User Interface (HTML/CSS)
+↓
+Flask Application
+↓
+Validation Layer
+↓
+Machine Learning Model
+↓
+MySQL Database
+
+---
+
+## Project Structure
+
+Health_Prediction/
+
 │
+
 ├── app.py
-├── model.py
-├── health_model.pkl
+
+├── model.pkl
+
+├── scaler.pkl
+
 ├── requirements.txt
-├── health_prediction.sql
+
 │
-├── dataset/
-│   └── health_data.csv
-│
-├── templates/
-│   ├── index.html
-│   ├── add_patient.html
-│   └── edit_patient.html
-│
+
 ├── static/
-│   ├── style.css
-│   └── script.js
+
+│ ├── css/
+
+│ ├── images/
+
 │
+
+├── templates/
+
+│ ├── index.html
+
+│ ├── add_patient.html
+
+│ ├── records.html
+
+│ ├── edit_patient.html
+
+│
+
+├── database/
+
+│ └── health_prediction.sql
+
+│
+
 └── README.md
-```
 
 ---
 
-# Database Setup
+## Installation Guide
 
-## Create Database
+### Step 1: Clone Repository
 
-```sql
-CREATE DATABASE health_prediction;
-USE health_prediction;
-```
+git clone https://github.com/your-github-username/health-prediction-app.git
 
-## Create Table
+cd health-prediction-app
 
-```sql
-CREATE TABLE patients (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    full_name VARCHAR(100),
-    dob DATE,
-    email VARCHAR(100),
-    glucose FLOAT,
-    haemoglobin FLOAT,
-    cholesterol FLOAT,
-    remarks VARCHAR(255)
-);
-```
+### Step 2: Create Virtual Environment
 
----
+python -m venv venv
 
-# Installation Steps
+### Step 3: Activate Environment
 
-## 1. Clone Repository
+Windows:
 
-```bash
-git clone YOUR_GITHUB_REPOSITORY_LINK
-```
+venv\Scripts\activate
 
-## 2. Open Project Folder
+Linux/Mac:
 
-```bash
-cd Health_prediction
-```
+source venv/bin/activate
 
-## 3. Install Required Packages
+### Step 4: Install Required Packages
 
-```bash
 pip install -r requirements.txt
-```
 
----
+### Step 5: Configure Database
 
-# Required Python Packages
+Create a MySQL database:
 
-```txt
-flask
-mysql-connector-python
-pandas
-numpy
-scikit-learn
-joblib
-```
+CREATE DATABASE health_prediction;
 
----
+Create patient table:
 
-# Train Machine Learning Model
+CREATE TABLE patients (
+id INT AUTO_INCREMENT PRIMARY KEY,
+full_name VARCHAR(100),
+dob DATE,
+email VARCHAR(100) UNIQUE,
+glucose FLOAT,
+haemoglobin FLOAT,
+cholesterol FLOAT,
+prediction VARCHAR(50)
+);
 
-Run the following command:
+### Step 6: Configure Database Credentials
 
-```bash
-python model.py
-```
+Update database connection settings inside app.py:
 
-This will generate:
+db = mysql.connector.connect(
+host="localhost",
+user="root",
+password="your_password",
+database="health_prediction"
+)
 
-```bash
-health_model.pkl
-```
+### Step 7: Run Application
 
----
-
-# Run Application
-
-```bash
 python app.py
-```
 
 Open browser:
 
-```bash
 http://127.0.0.1:5000
-```
 
 ---
 
-# Machine Learning Algorithm Used
+## API Endpoints
 
-## Decision Tree Classifier
+### Create Patient
 
-The application uses the Decision Tree Classification Algorithm from Scikit-learn to predict possible health conditions based on blood test values.
+POST /add
+
+Purpose:
+Creates a new patient record.
+
+---
+
+### Get All Patients
+
+GET /records
+
+Purpose:
+Returns all patient records stored in the database.
+
+---
+
+### Update Patient
+
+POST /update/<id>
+
+Purpose:
+Updates existing patient information.
+
+---
+
+### Delete Patient
+
+GET /delete/<id>
+
+Purpose:
+Deletes a patient record.
+
+---
+
+## Validation Rules
+
+### Email Validation
+
+Valid Examples:
+
+[robyn@gmail.com](mailto:robyn@gmail.com)
+
+[sam@news.com.au](mailto:sam@news.com.au)
+
+Invalid Examples:
+
+hunter@gmail
+
+kris.wu.gmail.com
+
+Reason:
+The application requires a valid email format containing '@' and a valid domain extension.
+
+---
+
+### Date Validation
+
+Valid Example:
+
+28.01.1960
+
+Invalid Examples:
+
+31.11.2001
+
+19.10.2030
+
+Reasons:
+
+* Invalid calendar date
+* Future date not allowed
+
+---
+
+### Duplicate Record Validation
+
+The application prevents duplicate patient entries to maintain data integrity.
+
+---
+
+## Machine Learning Integration
 
 ### Input Features
 
@@ -198,47 +283,107 @@ The application uses the Decision Tree Classification Algorithm from Scikit-lear
 * Haemoglobin
 * Cholesterol
 
-### Predicted Results
+### Workflow
 
-* Normal
-* Diabetes Risk
-* High Risk
-* Anemia
-* Heart Risk
+1. User enters patient details.
+2. Application validates all fields.
+3. Input data is prepared for prediction.
+4. Trained ML model generates prediction.
+5. Prediction result is displayed and stored.
 
----
+### Model Loading
 
-# API/ML Integration
+model = joblib.load("model.pkl")
 
-The Machine Learning model is integrated into the Flask backend using:
+prediction = model.predict(features)
 
-* Joblib
-* Scikit-learn
+### Why This ML Approach Was Selected
 
-The model automatically predicts health remarks whenever a new patient record is added or updated.
+The machine learning model was selected because:
 
----
-
-# Challenges Faced
-
-* MySQL database connectivity issues
-* Flask template routing errors
-* ML model integration with Flask
-* CRUD operation debugging
-* Input validation handling
-
-These challenges were resolved through debugging, proper project structuring, and testing.
+* Fast prediction generation
+* Easy Flask integration
+* Reliable performance
+* Suitable for healthcare screening applications
+* Lightweight deployment using Joblib
 
 ---
 
-# Future Improvements
+## Assessment Test Cases
 
-* Add authentication and login system
-* Deploy application on cloud
-* Add charts and analytics dashboard
-* Use larger healthcare datasets
-* Improve ML prediction accuracy
-* Add REST API support
+### Successfully Created Records
+
+1. Robyn Pears
+2. Darryl Tim
+3. Sam Kerr
+4. Madison XI
+5. Tenille Singh
+6. Prem Kumar
+
+### Rejected Records
+
+John Hunter
+Reason: Invalid Email Format
+
+Peter Larry
+Reason: Invalid Date (31 November does not exist)
+
+Robyn Pears (Duplicate)
+Reason: Duplicate Record
+
+Kris Wu
+Reason: Future Date of Birth and Invalid Email Format
+
+---
+
+## CRUD Demonstration
+
+### Create
+
+Patient records can be added using the Add Patient form.
+
+### Read
+
+All patient records are displayed in the Records page.
+
+### Update
+
+Patient details can be edited and saved.
+
+Example:
+Email changed to:
+
+[gokul@infocare.com](mailto:gokul@infocare.com)
+
+### Delete
+
+Patient records can be permanently removed from the system.
+
+---
+
+## Future Improvements
+
+* User Authentication
+* Admin Dashboard
+* Role-Based Access Control
+* PDF Report Generation
+* Email Notifications
+* Cloud Deployment
+* REST API Expansion
+* Advanced Health Analytics
+
+---
+
+## GitHub Repository
+
+Upload the complete source code to GitHub and include:
+
+* Source Code
+* README.md
+* requirements.txt
+* SQL File
+* Model Files
+* Screenshots
 
 ---
 
